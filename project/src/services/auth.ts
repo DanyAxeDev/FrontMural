@@ -1,6 +1,6 @@
 import { LoginCredentials } from '../types';
 
-const url = "http://localhost:8080";
+const url = "http://10.251.10.37:8080";
 
 export async function login(credentials: LoginCredentials): Promise<string> {
   const response = await fetch(`${url}/auth`, {

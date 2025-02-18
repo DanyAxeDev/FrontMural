@@ -8,7 +8,7 @@ interface MuralCreateProps {
 
 export default function MuralCreate({ onSuccess, onClose }: MuralCreateProps) {
 
-    const url = "http://localhost:8080";
+    const url = "http://10.251.10.37:8080";
 
     const [nome, setNome] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -40,8 +40,8 @@ export default function MuralCreate({ onSuccess, onClose }: MuralCreateProps) {
     };
 
     return (
-        <div className='sticky inset-44 w-full md:w-auto'>
-            <div className="bg-white rounded-lg p-6 max-w-md w-full mx-6">
+        <div className='sticky inset-44 w-full max-w-lg mx-4 p-6 bg-white rounded-lg shadow-lg'
+            style={{ animation: 'imageExpandIn 0.3s forwards' }}>
             <div className="flex justify-between items-center mb-4">
                 <h3 className="text-xl font-semibold">Criar Novo Mural</h3>
                 <button
@@ -76,7 +76,6 @@ export default function MuralCreate({ onSuccess, onClose }: MuralCreateProps) {
                     {isSubmitting ? 'Criando...' : 'Criar Mural'}
                 </button>
             </form>
-        </div>
         </div>
     );
 }

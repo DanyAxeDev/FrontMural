@@ -8,7 +8,7 @@ interface ImageUploadProps {
 }
 
 export default function ImageUpload({ muralId, onSuccess, onClose }: ImageUploadProps) {
-  const url = "http://localhost:8080";
+  const url = "http://10.251.10.37:8080";
 
   const [isUploading, setIsUploading] = useState(false);
   const [descricao, setDescricao] = useState('');
@@ -22,7 +22,7 @@ export default function ImageUpload({ muralId, onSuccess, onClose }: ImageUpload
 
     reader.onload = async () => {
       const base64Data = reader.result?.toString().split(',')[1];
-      
+
       try {
         const token = localStorage.getItem('jwt_token');
         const response = await fetch(`${url}/imagens/${muralId}`, {
@@ -50,11 +50,11 @@ export default function ImageUpload({ muralId, onSuccess, onClose }: ImageUpload
   };
 
   return (
-    <div className='sticky inset-36 w-full md:w-auto'>
-      <div className="bg-white rounded-lg p-6 max-w-md w-full mx-6">
+    <div className='sticky inset-36 w-full max-w-lg mx-4 p-6 bg-white rounded-lg shadow-lg'
+      style={{ animation: 'imageExpandIn 0.3s forwards' }}>
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-semibold">Adicionar Imagem</h3>
-        <button 
+        <button
           onClick={onClose}
           className="text-gray-500 hover:text-gray-700 transition-colors"
         >
@@ -91,7 +91,6 @@ export default function ImageUpload({ muralId, onSuccess, onClose }: ImageUpload
           </div>
         </label>
       </div>
-    </div>
     </div>
   );
 }

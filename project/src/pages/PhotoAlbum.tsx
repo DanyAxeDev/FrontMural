@@ -17,14 +17,33 @@ export default function PhotoAlbum() {
   const [selectedMural, setSelectedMural] = useState<number | null>(null);
   const [selectedImage, setSelectedImage] = useState<any | null>(null);
   const isGuest = localStorage.getItem('user_role') === 'guest';
+  const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
 
-  const url = "http://localhost:8080";
+  const url = "http://10.251.10.37:8080";
 
   const handleAddImage = () => {
     setCurrentMuralId(selectedMural);
     setShowImageModal(true);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsMobile(true);
+      } else {
+        setIsMobile(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem('jwt_token');
@@ -57,7 +76,7 @@ export default function PhotoAlbum() {
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const response = await fetch('http://localhost:8080/murais', {
+      const response = await fetch(`${url}/murais`, {
         headers
       });
 
@@ -128,6 +147,18 @@ export default function PhotoAlbum() {
     navigate('/');
   };
 
+  const handleClick = (img: any) => {
+    if (!isMobile) {
+      setSelectedImage(img); // Defina a URL da imagem ou algum outro valor
+    }
+  };
+
+  const handleDoubleClick = (img: any) => {
+    if (isMobile) {
+      setSelectedImage(img);
+    }
+  };
+
   return (
     <div className='w-full'>
       <div className="min-h-screen relative bg-gradient-to-b from-purple-900/50 to-purple-600/50">
@@ -196,7 +227,10 @@ export default function PhotoAlbum() {
                   key={idx}
                   className="aspect-square group relative overflow-hidden rounded-lg cursor-pointer drop-shadow-lg hover:ring-yellow-300 hover:ring"
                   onClick={() => {
-                    setSelectedImage(img)
+                    handleClick(img);
+                  }}
+                  onDoubleClick={() => {
+                    handleDoubleClick(img);
                   }}
                 >
                   <img
@@ -236,6 +270,7 @@ export default function PhotoAlbum() {
               <div
                 className="max-w-3xl w-full relative flex flex-col gap-4 items-center"
                 onClick={e => e.stopPropagation()}
+                style={{ animation: 'imageExpandIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)' }}
               >
                 <button
                   className="absolute -top-2 -right-2 text-white/70 hover:text-white bg-black/50 rounded-full p-1"
@@ -269,7 +304,7 @@ export default function PhotoAlbum() {
                   </div>
                 )}
                 {selectedImage.descricao && (
-                  <div className="flex justify-between bg-white/10 backdrop-blur-md rounded-lg p-4 break-words w-full">
+                  <div className="flex justify-between bg-white/10 backdrop-blur-md rounded-lg p-4 break-words w-full" style={{ animation: 'imageExpandIn 0.3s 0.1s both' }}>
                     <p className="text-white">{selectedImage.descricao}</p>
                     {!isGuest && (
                       <button
