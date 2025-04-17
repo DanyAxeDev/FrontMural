@@ -8,7 +8,7 @@ interface MuralCreateProps {
 
 export default function MuralCreate({ onSuccess, onClose }: MuralCreateProps) {
 
-    const url = "http://10.251.10.37:8080";
+    const url = "https://backmural-production.up.railway.app";
 
     const [nome, setNome] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);

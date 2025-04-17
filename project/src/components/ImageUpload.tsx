@@ -8,7 +8,7 @@ interface ImageUploadProps {
 }
 
 export default function ImageUpload({ muralId, onSuccess, onClose }: ImageUploadProps) {
-  const url = "http://10.251.10.37:8080";
+  const url = "https://backmural-production.up.railway.app";
 
   const [isUploading, setIsUploading] = useState(false);
   const [descricao, setDescricao] = useState('');

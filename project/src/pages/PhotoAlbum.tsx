@@ -20,7 +20,7 @@ export default function PhotoAlbum() {
   const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
 
-  const url = "http://10.251.10.37:8080";
+  const url = "https://backmural-production.up.railway.app";
 
   const handleAddImage = () => {
     setCurrentMuralId(selectedMural);

@@ -10,7 +10,7 @@ interface SetDescriptionProps {
 
 export default function SetDescription({ imagemId, descricaoAtual, onSuccess, onClose }: SetDescriptionProps) {
 
-    const url = "http://10.251.10.37:8080";
+    const url = "https://backmural-production.up.railway.app";
 
     const [descricao, setDescricao] = useState(descricaoAtual);
     const [isSubmitting, setIsSubmitting] = useState(false);
