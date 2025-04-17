@@ -1,6 +1,6 @@
 import { LoginCredentials } from '../types';
 
-const url = "https://backmural-production.up.railway.app";
+const url = import.meta.env.VITE_API_URL;
 
 export async function login(credentials: LoginCredentials): Promise<string> {
   const response = await fetch(`${url}/auth`, {

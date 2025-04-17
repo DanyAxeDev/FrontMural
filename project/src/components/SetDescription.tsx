@@ -10,7 +10,7 @@ interface SetDescriptionProps {
 
 export default function SetDescription({ imagemId, descricaoAtual, onSuccess, onClose }: SetDescriptionProps) {
 
-    const url = "https://backmural-production.up.railway.app";
+    const url = import.meta.env.VITE_API_URL;
 
     const [descricao, setDescricao] = useState(descricaoAtual);
     const [isSubmitting, setIsSubmitting] = useState(false);

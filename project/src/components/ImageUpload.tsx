@@ -8,7 +8,7 @@ interface ImageUploadProps {
 }
 
 export default function ImageUpload({ muralId, onSuccess, onClose }: ImageUploadProps) {
-  const url = "https://backmural-production.up.railway.app";
+  const url = import.meta.env.VITE_API_URL;
 
   const [isUploading, setIsUploading] = useState(false);
   const [descricao, setDescricao] = useState('');

@@ -8,7 +8,7 @@ interface MuralCreateProps {
 
 export default function MuralCreate({ onSuccess, onClose }: MuralCreateProps) {
 
-    const url = "https://backmural-production.up.railway.app";
+    const url = import.meta.env.VITE_API_URL;
 
     const [nome, setNome] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);

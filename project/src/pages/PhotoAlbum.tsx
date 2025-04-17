@@ -20,7 +20,7 @@ export default function PhotoAlbum() {
   const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
 
-  const url = "https://backmural-production.up.railway.app";
+  const url = import.meta.env.VITE_API_URL;
 
   const handleAddImage = () => {
     setCurrentMuralId(selectedMural);
