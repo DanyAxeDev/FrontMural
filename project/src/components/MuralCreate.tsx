@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
+import API_URL from '../utils/config';
 
 interface MuralCreateProps {
     onSuccess: () => void;
@@ -8,7 +9,7 @@ interface MuralCreateProps {
 
 export default function MuralCreate({ onSuccess, onClose }: MuralCreateProps) {
 
-    const url = import.meta.env.VITE_API_URL;
+    const url = API_URL;
 
     const [nome, setNome] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);

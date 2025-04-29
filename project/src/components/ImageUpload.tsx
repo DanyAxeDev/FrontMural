@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Upload, X } from 'lucide-react';
+import API_URL from '../utils/config';
 
 interface ImageUploadProps {
   muralId: number;
@@ -8,7 +9,7 @@ interface ImageUploadProps {
 }
 
 export default function ImageUpload({ muralId, onSuccess, onClose }: ImageUploadProps) {
-  const url = import.meta.env.VITE_API_URL;
+  const url = API_URL;
 
   const [isUploading, setIsUploading] = useState(false);
   const [descricao, setDescricao] = useState('');

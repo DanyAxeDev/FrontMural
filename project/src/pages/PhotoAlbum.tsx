@@ -7,6 +7,7 @@ import { truncateText } from '../utils/stringUtils';
 import MuralCreate from '../components/MuralCreate';
 import Modal from '../components/Modal';
 import SetDescription from '../components/SetDescription';
+import API_URL from '../utils/config';
 
 export default function PhotoAlbum() {
   const [murais, setMurais] = useState<any[]>([]);
@@ -16,11 +17,12 @@ export default function PhotoAlbum() {
   const [currentMuralId, setCurrentMuralId] = useState<number | null>(null);
   const [selectedMural, setSelectedMural] = useState<number | null>(null);
   const [selectedImage, setSelectedImage] = useState<any | null>(null);
+  const [loading, setLoading] = useState(true);
   const isGuest = localStorage.getItem('user_role') === 'guest';
   const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
 
-  const url = import.meta.env.VITE_API_URL;
+  const url = API_URL;
 
   const handleAddImage = () => {
     setCurrentMuralId(selectedMural);
@@ -67,6 +69,7 @@ export default function PhotoAlbum() {
 
   const carregarMurais = async () => {
     try {
+      setLoading(true);
       const token = localStorage.getItem('jwt_token');
       const headers: HeadersInit = {
         'Content-Type': 'application/json'
@@ -91,6 +94,8 @@ export default function PhotoAlbum() {
       if (!isGuest) {
         navigate('/');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -180,29 +185,43 @@ export default function PhotoAlbum() {
               )}
 
               {/* Mural folders */}
-              {murais.map(mural => (
-                <div
-                  key={mural.id}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer group transition-all ${selectedMural === mural.id
+              {loading ? (
+                <div className="flex items-center gap-2 text-white px-3 py-2">
+                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                  </svg>
+                  Carregando murais...
+                </div>
+              ) : (
+                murais.map(mural => (
+                  <div
+                    key={mural.id}
+                    className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer group transition-all ${selectedMural === mural.id
                       ? 'bg-white/30 hover:bg-white/40'
                       : 'bg-white/10 hover:bg-white/20'
-                    }`}
-                  onClick={() => setSelectedMural(mural.id)}
-                >
-                  <span className="text-white font-medium whitespace-nowrap">{truncateText(mural.nome, 25)}</span>
-                  {!isGuest && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        deletarMural(mural.id);
-                      }}
-                      className="text-red-400 hover:text-red-300 opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  )}
-                </div>
-              ))}
+                      }`}
+                    onClick={() => {
+                      setSelectedMural(mural.id);
+                      getDisplayedImages();
+                    }
+                    }
+                  >
+                    <span className="text-white font-medium whitespace-nowrap">{truncateText(mural.nome, 25)}</span>
+                    {!isGuest && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deletarMural(mural.id);
+                        }}
+                        className="text-red-400 hover:text-red-300 opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    )}
+                  </div>
+                )
+                ))}
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 text-white/70 hover:bg-white/20 transition-colors"

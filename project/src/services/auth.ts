@@ -1,6 +1,7 @@
 import { LoginCredentials } from '../types';
+import API_URL from '../utils/config';
 
-const url = import.meta.env.VITE_API_URL;
+const url = API_URL;
 
 export async function login(credentials: LoginCredentials): Promise<string> {
   const response = await fetch(`${url}/auth`, {

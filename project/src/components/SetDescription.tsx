@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
+import API_URL from '../utils/config';
 
 interface SetDescriptionProps {
     descricaoAtual: any;
@@ -10,7 +11,7 @@ interface SetDescriptionProps {
 
 export default function SetDescription({ imagemId, descricaoAtual, onSuccess, onClose }: SetDescriptionProps) {
 
-    const url = import.meta.env.VITE_API_URL;
+    const url = API_URL;
 
     const [descricao, setDescricao] = useState(descricaoAtual);
     const [isSubmitting, setIsSubmitting] = useState(false);
