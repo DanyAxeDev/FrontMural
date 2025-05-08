@@ -119,7 +119,7 @@ export default function PhotoAlbum() {
       }
     } catch (error) {
       console.error('Erro ao deletar mural:', error);
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -199,43 +199,34 @@ export default function PhotoAlbum() {
               )}
 
               {/* Mural folders */}
-              {loading ? (
-                <div className="flex items-center gap-2 text-white px-3 py-2">
-                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-                  </svg>
-                  Carregando murais...
+              {murais.map(mural => (
+                <div
+                  key={mural.id}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer group transition-all ${selectedMural === mural.id
+                    ? 'bg-white/30 hover:bg-white/40'
+                    : 'bg-white/10 hover:bg-white/20'
+                    }`}
+                  onClick={() => {
+                    setSelectedMural(mural.id);
+                    getDisplayedImages();
+                  }
+                  }
+                >
+                  <span className="text-white font-medium whitespace-nowrap">{truncateText(mural.nome, 25)}</span>
+                  {!isGuest && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deletarMural(mural.id);
+                      }}
+                      className="text-red-400 hover:text-red-300 opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  )}
                 </div>
-              ) : (
-                murais.map(mural => (
-                  <div
-                    key={mural.id}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer group transition-all ${selectedMural === mural.id
-                      ? 'bg-white/30 hover:bg-white/40'
-                      : 'bg-white/10 hover:bg-white/20'
-                      }`}
-                    onClick={() => {
-                      setSelectedMural(mural.id);
-                      getDisplayedImages();
-                    }
-                    }
-                  >
-                    <span className="text-white font-medium whitespace-nowrap">{truncateText(mural.nome, 25)}</span>
-                    {!isGuest && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          deletarMural(mural.id);
-                        }}
-                        className="text-red-400 hover:text-red-300 opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    )}
-                  </div>
-                )
-                ))}
+              )
+              )}
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 text-white/70 hover:bg-white/20 transition-colors"
