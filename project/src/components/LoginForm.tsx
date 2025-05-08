@@ -45,7 +45,6 @@ export default function LoginForm() {
     <div className="w-full max-w-md h-svh">
       <div className="text-center mb-8">
         <Sun className="h-16 w-16 text-yellow-400 mx-auto animate-pulse lantern-glow" />
-        <h1 className="text-4xl font-bold text-white mt-4 text-shadow">Só minha princesa pode entrar</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="backdrop-blur-md bg-white/10 shadow-xl rounded-lg px-8 pt-6 pb-8 mb-4 border border-purple-300/30">

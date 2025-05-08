@@ -102,6 +102,7 @@ export default function PhotoAlbum() {
   const deletarMural = async (id: number) => {
     if (!window.confirm('Tem certeza que deseja deletar este mural?')) return;
 
+    setLoading(true);
     try {
       const token = localStorage.getItem('jwt_token');
       const response = await fetch(`${url}/murais/${id}`, {
@@ -118,12 +119,15 @@ export default function PhotoAlbum() {
       }
     } catch (error) {
       console.error('Erro ao deletar mural:', error);
+    }finally{
+      setLoading(false);
     }
   };
 
   const deletarImagem = async (muralId: number | null, id: number) => {
     if (!window.confirm('Tem certeza que deseja deletar esta imagem?')) return;
 
+    setLoading(true);
     try {
       const token = localStorage.getItem('jwt_token');
       const response = await fetch(`${url}/imagens/${muralId}/${id}`, {
@@ -138,6 +142,8 @@ export default function PhotoAlbum() {
       }
     } catch (error) {
       console.error('Erro ao deletar imagem:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -154,7 +160,7 @@ export default function PhotoAlbum() {
 
   const handleClick = (img: any) => {
     if (!isMobile) {
-      setSelectedImage(img); // Defina a URL da imagem ou algum outro valor
+      setSelectedImage(img);
     }
   };
 
@@ -167,6 +173,14 @@ export default function PhotoAlbum() {
   return (
     <div className='w-full'>
       <div className="min-h-screen relative bg-gradient-to-b from-purple-900/50 to-purple-600/50">
+        {loading && (
+          <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+            </svg>
+          </div>
+        )}
         <ParticlesBackground />
 
         {/* Header with folders/murals */}
@@ -297,6 +311,14 @@ export default function PhotoAlbum() {
                 >
                   <X className="h-6 w-6" />
                 </button>
+                {loading && (
+                  <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                    </svg>
+                  </div>
+                )}
                 {!isGuest && (
                   <button
                     className='absolute -top-2 -left-2 text-red-500 hover:text-red-400 bg-black/50 rounded-full p-1'
