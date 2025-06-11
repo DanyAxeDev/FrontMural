@@ -227,13 +227,15 @@ export default function PhotoAlbum() {
                 </div>
               )
               )}
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 text-white/70 hover:bg-white/20 transition-colors"
-              >
-                <LogOut className="h-5 w-5" />
-                <span className="whitespace-nowrap">Sair</span>
-              </button>
+              <div className="ml-auto">
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 text-white/70 hover:bg-white/20 transition-colors"
+                >
+                  <LogOut className="h-5 w-5" />
+                  <span className="whitespace-nowrap">Sair</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
